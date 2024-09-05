@@ -44,8 +44,9 @@ class BaseAgent(ABC):
     
     def add_to_memory(self, content: Dict[str, Any]):
         """Add information to agent's memory."""
-        # Memory management temporarily disabled for debugging
-        pass
+        self.memory.append({"timestamp": datetime.utcnow().isoformat(), "content": content})
+        if len(self.memory) > 10:
+            self.memory = self.memory[-10:]
     
     @abstractmethod
     async def execute(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
