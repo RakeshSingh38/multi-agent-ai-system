@@ -54,11 +54,13 @@ def main():
     # Data sources info
     render_data_sources_info(server_online)
 
-    # Main tabs - Simplified for better performance
-    tab1, tab2, tab3 = st.tabs([
+    # Main tabs
+    tab1, tab2, tab3, tab4, tab5 = st.tabs([
         "🚀 Research Tool", 
         "📊 Results",
-        "📖 About"
+        "📈 Enhanced Analytics",
+        "📖 About", 
+        "🛠️ Settings"
     ])
 
     with tab1:
@@ -66,9 +68,15 @@ def main():
 
     with tab2:
         render_results_page(server_online)
-
+    
     with tab3:
+        render_enhanced_results()
+
+    with tab4:
         render_about_page()
+
+    with tab5:
+        render_settings_page(server_online)
 
     # Footer
     render_footer()
