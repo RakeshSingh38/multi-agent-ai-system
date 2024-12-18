@@ -62,8 +62,12 @@ class AnalysisAgent(BaseAgent):
                 "insights": insights
             })
             
-            # Statistical analysis removed for performance optimization
-            statistical_results = {"status": "disabled", "reason": "Performance optimization"}
+            # Perform enhanced statistical analysis (temporarily disabled for stability)
+            try:
+                statistical_results = self._perform_statistical_analysis(research_data)
+            except Exception as e:
+                logger.warning(f"Statistical analysis failed: {str(e)}")
+                statistical_results = {"error": "Statistical analysis temporarily disabled"}
             
             # Perform predictive analysis (temporarily disabled for stability)
             try:
