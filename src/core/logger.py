@@ -22,15 +22,15 @@ def setup_logger(name: str) -> logging.Logger:
     console_handler.setFormatter(formatter)
     logger.addHandler(console_handler)
     
-    # File handler disabled for debugging
-    # try:
-    #     log_path = Path("logs") / f"{datetime.now().strftime('%Y%m%d')}_multiagent.log"
-    #     log_path.parent.mkdir(parents=True, exist_ok=True)
-    #     file_handler = logging.FileHandler(str(log_path))
-    #     file_handler.setFormatter(formatter)
-    #     logger.addHandler(file_handler)
-    # except Exception:
-    #     pass
+    # File handler (best-effort)
+    try:
+        log_path = Path("logs") / f"{datetime.now().strftime('%Y%m%d')}_multiagent.log"
+        log_path.parent.mkdir(parents=True, exist_ok=True)
+        file_handler = logging.FileHandler(str(log_path))
+        file_handler.setFormatter(formatter)
+        logger.addHandler(file_handler)
+    except Exception:
+        pass
     
     return logger
 
