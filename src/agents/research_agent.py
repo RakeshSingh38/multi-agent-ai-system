@@ -113,12 +113,12 @@ Please provide:
         
         research_data = real_data.get('findings', {})
         
-        # Process web search results - Limited for performance
+        # Process web search results
         if 'web_search' in research_data:
             web_results = research_data['web_search']
             findings['detailed_sources']['web_search'] = web_results
-            for result in web_results[:5]:  # Reduced to 5 results for performance
-                findings['key_findings'].append(f"Web: {result.get('title', 'Unknown')} - {result.get('snippet', '')[:100]}...")
+            for result in web_results[:10]:  # Increase from 5 to 10 results
+                findings['key_findings'].append(f"Web: {result.get('title', 'Unknown')} - {result.get('snippet', '')}")  # Remove 100 char limit and "..."
                 findings['web_insights'].append({
                     'title': result.get('title', ''),
                     'url': result.get('url', ''),
