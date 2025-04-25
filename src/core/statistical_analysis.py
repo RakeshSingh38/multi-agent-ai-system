@@ -13,58 +13,8 @@ class StatisticalAnalyzer:
         self.analysis_results = {}
     
     def analyze_trends(self, data: List[Dict[str, Any]], metric: str = "price") -> Dict[str, Any]:
-        """Analyze trends in time series data."""
-        if not data:
-            return {"error": "No data provided for trend analysis"}
-        
-        try:
-            # Convert to DataFrame
-            df = pd.DataFrame(data)
-            
-            if metric not in df.columns:
-                return {"error": f"Metric '{metric}' not found in data"}
-            
-            # Clean numeric data
-            numeric_data = pd.to_numeric(df[metric], errors='coerce').dropna()
-            
-            if len(numeric_data) < 2:
-                return {"error": "Insufficient data points for trend analysis"}
-            
-            # Calculate trend statistics with enhanced precision
-            x = np.arange(len(numeric_data))
-            slope, intercept, r_value, p_value, std_err = stats.linregress(x, numeric_data)
-            
-            # Determine trend direction
-            if p_value < 0.05:  # Statistically significant
-                if slope > 0:
-                    trend_direction = "increasing"
-                else:
-                    trend_direction = "decreasing"
-            else:
-                trend_direction = "stable"
-            
-            # Calculate additional metrics
-            mean_value = numeric_data.mean()
-            std_value = numeric_data.std()
-            latest_value = numeric_data.iloc[-1]
-            first_value = numeric_data.iloc[0]
-            total_change = ((latest_value - first_value) / first_value) * 100
-            
-            return {
-                "trend_direction": trend_direction,
-                "slope": slope,
-                "correlation": r_value,
-                "p_value": p_value,
-                "statistical_significance": p_value < 0.05,
-                "mean": mean_value,
-                "std_deviation": std_value,
-                "total_change_percent": total_change,
-                "latest_value": latest_value,
-                "data_points": len(numeric_data)
-            }
-            
-        except Exception as e:
-            return {"error": f"Trend analysis failed: {str(e)}"}
+        """Analyze trends in time series data - Temporarily disabled for maintenance."""
+        return {"error": "Trend analysis temporarily disabled for system maintenance"}
     
     def calculate_correlations(self, data: List[Dict[str, Any]], 
                              variables: List[str] = None) -> Dict[str, Any]:
