@@ -23,9 +23,32 @@ def render_settings_page(server_online):
 
 
 def _render_server_info():
-    """Render server information section - Simplified for performance."""
+    """Render server information section."""
     st.subheader("🖥️ Server Information")
-    st.info("Server monitoring temporarily simplified for system optimization")
+    
+    try:
+        health_data = get_server_health()
+        if health_data:
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                st.metric("System Status", health_data.get("status", "Unknown").title())
+            with col2:
+                st.metric("Version", health_data.get("version", "Unknown"))
+            with col3:
+                st.metric("Environment", "Development")
+
+            services = health_data.get("services", {})
+            if services:
+                st.subheader("🔧 Services Status")
+                for service, status in services.items():
+                    if status == "healthy":
+                        st.write(f"✅ {service.title()}: {status}")
+                    else:
+                        st.write(f"❌ {service.title()}: {status}")
+        else:
+            st.error("Could not retrieve server health information")
+    except Exception as e:
+        st.error(f"Could not retrieve server information: {e}")
 
 
 def _render_system_config():
