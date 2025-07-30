@@ -42,149 +42,16 @@ def render_custom_css():
 
 
 def render_header():
-    """Render the clean, professional header."""
-    # Clean title section
+    """Render the clean, professional header - Simplified for performance."""
     st.markdown(
         """
-    <style>
-    .main-title {
-        font-size: 2.2rem;
-        font-weight: 600;
-        margin: 0;
-        letter-spacing: -0.025em;
-        color: #1e293b;
-    }
-    .main-subtitle {
-        font-size: 1rem;
-        margin: 0.25rem 0 0 0;
-        font-weight: 400;
-        color: #64748b;
-    }
-    @media (max-width: 768px) {
-        .main-title {
-            font-size: 1.8rem;
-        }
-        .main-subtitle {
-            font-size: 0.9rem;
-        }
-    }
-    @media (max-width: 480px) {
-        .main-title {
-            font-size: 1.6rem;
-        }
-        .main-subtitle {
-            font-size: 0.85rem;
-        }
-    }
-    </style>
     <div style="text-align: center; padding: 1rem 0; margin-bottom: 0.5rem;">
-        <h1 class="main-title">
+        <h1 style="font-size: 2.2rem; font-weight: 600; margin: 0; color: #1e293b;">
             🤖 Multi-Agent AI System
         </h1>
-        <p class="main-subtitle">
+        <p style="font-size: 1rem; margin: 0.25rem 0 0 0; color: #64748b;">
             Intelligent Research & Analysis Platform
         </p>
-    </div>
-    """,
-        unsafe_allow_html=True,
-    )
-
-    # Feature indicators - Compact horizontal layout
-    st.markdown(
-        """
-    <style>
-    .feature-row {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 2rem;
-        margin-top: 1rem;
-        padding: 1rem;
-        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-        border-radius: 12px;
-        flex-wrap: wrap;
-    }
-    .feature-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        min-width: 100px;
-        transition: transform 0.2s ease;
-    }
-    .feature-item:hover {
-        transform: translateY(-2px);
-    }
-    .feature-icon-compact {
-        font-size: 1.8rem;
-        margin-bottom: 0.5rem;
-    }
-    .feature-text-compact {
-        font-weight: 500;
-        color: #374151;
-        font-size: 0.85rem;
-        line-height: 1.2;
-    }
-    .feature-subtext {
-        color: #6b7280;
-        font-size: 0.75rem;
-        margin-top: 0.25rem;
-    }
-    @media (max-width: 768px) {
-        .feature-row {
-            gap: 1rem;
-            padding: 0.75rem;
-        }
-        .feature-item {
-            min-width: 80px;
-        }
-        .feature-icon-compact {
-            font-size: 1.5rem;
-        }
-        .feature-text-compact {
-            font-size: 0.8rem;
-        }
-    }
-    @media (max-width: 480px) {
-        .feature-row {
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-        .feature-item {
-            flex-direction: row;
-            justify-content: flex-start;
-            min-width: unset;
-            width: 100%;
-            text-align: left;
-        }
-        .feature-icon-compact {
-            margin-bottom: 0;
-            margin-right: 0.75rem;
-            font-size: 1.3rem;
-        }
-    }
-    </style>
-
-    <div class="feature-row">
-        <div class="feature-item">
-            <div class="feature-icon-compact">📊</div>
-            <div>
-                <div class="feature-text-compact">Real-Time Data</div>
-            </div>
-        </div>
-        <div class="feature-item">
-            <div class="feature-icon-compact">🔍</div>
-            <div>
-                <div class="feature-text-compact">Multi-Source Research</div>
-                <div class="feature-subtext">Web • Markets • News • Wikipedia</div>
-            </div>
-        </div>
-        <div class="feature-item">
-            <div class="feature-icon-compact">🧠</div>
-            <div>
-                <div class="feature-text-compact">AI Analysis</div>
-            </div>
-        </div>
     </div>
     """,
         unsafe_allow_html=True,
