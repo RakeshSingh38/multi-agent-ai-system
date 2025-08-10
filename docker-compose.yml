@@ -1,0 +1,51 @@
+
+services:
+  # Unified app service (FastAPI + Streamlit), same as local env
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"  # FastAPI
+      - "8501:8501"  # Streamlit
+    env_file:
+      - .env
+    environment:
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - DATABASE_URL=sqlite:///./data/multiagent.db
+    volumes:
+      - app_data:/app/data
+      - app_logs:/app/logs
+    # No hard dependency so you can use Hugging Face without starting Ollama
+    restart: unless-stopped
+    networks:
+      - net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # Ollama (official image) - Simplified
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+    volumes:
+      - ${OLLAMA_HOST_MODELS:-${USERPROFILE}/.ollama}:/root/.ollama
+    restart: unless-stopped
+    networks:
+      - net
+
+volumes:
+  app_data:
+  app_logs:
+
+networks:
+  net:
+    driver: bridge
