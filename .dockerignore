@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual environments
+.env
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Streamlit
+.streamlit/
+
+# Logs and data
+logs/
+*.db
+data/
+!data/.gitkeep
+
+# Documentation (keep only essential)
+*.md
+!README.md
+
+# Scripts
+*.sh
+*.bat
+!start.sh
+
+# Config files
+*.conf
+!nginx.conf

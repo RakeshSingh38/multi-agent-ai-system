@@ -1,0 +1,50 @@
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Environment
+.env
+*.env
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+logs/
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data
+data/
+**pycache**/ _.pyc 
+.env  
+_.db 
+!.env.example 
+.conf 
+
+.sh 
+.bat
+
+.md
+
+!README.md
+
+!requirements.txt
+!requirements-full.txt
