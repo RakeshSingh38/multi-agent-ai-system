@@ -1,0 +1,40 @@
+# OpenRouter API Version - Multi-Agent AI System
+# Lightweight deployment using OpenRouter API (no local models)
+
+FROM python:3.12-slim
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements first for better caching
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the application code
+COPY . .
+
+# Create data directory
+RUN mkdir -p data logs
+
+# Set environment variables for OpenRouter
+ENV OLLAMA_BASE_URL=https://openrouter.ai/api/v1
+ENV OLLAMA_MODEL=meta-llama/llama-3.2-3b-instruct
+ENV LLM_BACKEND=ollama
+ENV API_HOST=0.0.0.0
+ENV API_PORT=8000
+ENV DATABASE_URL=sqlite:///./data/multiagent.db
+
+# Expose ports
+EXPOSE 8000 8501
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost:8000/health || exit 1
+
+# Start the application
+CMD ["python", "render-start.py"]

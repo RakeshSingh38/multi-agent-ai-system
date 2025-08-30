@@ -1,0 +1,54 @@
+# Multi-Agent AI System with Built-in Ollama Model
+# Self-contained version with pre-loaded model (no internet required)
+
+FROM ollama/ollama:latest
+
+# Set working directory
+WORKDIR /app
+
+# Copy the main application files
+COPY . .
+
+# Install system dependencies for the main app
+RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-pip \
+    python3-venv \
+    python3-setuptools \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create virtual environment and install Python dependencies
+RUN python3 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+RUN pip install --upgrade pip setuptools wheel
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Pre-download and setup a small model during build
+# Using a small model like llama3.2:1b for demo purposes
+RUN ollama serve & sleep 5 && \
+    ollama pull llama3.2:1b && \
+    pkill ollama
+
+# Create startup script
+RUN echo '#!/bin/bash\n\
+export PATH="/opt/venv/bin:$PATH"\n\
+echo "Starting Ollama with built-in model..."\n\
+ollama serve &\n\
+OLLAMA_PID=$!\n\
+sleep 5\n\
+echo "Starting Multi-Agent AI System..."\n\
+python render-start.py\n\
+wait $OLLAMA_PID' > /app/start.sh && \
+chmod +x /app/start.sh
+
+# Expose ports
+EXPOSE 8000 8501 11434
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost:8000/health || exit 1
+
+# Start everything
+ENTRYPOINT ["/bin/bash"]
+CMD ["/app/start.sh"]

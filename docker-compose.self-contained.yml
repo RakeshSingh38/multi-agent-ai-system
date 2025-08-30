@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  # Self-contained app with built-in Ollama model
+  app-self-contained:
+    build:
+      context: .
+      dockerfile: Dockerfile.self-contained
+    ports:
+      - "8000:8000"  # FastAPI
+      - "8501:8501"  # Streamlit
+      - "11434:11434"  # Ollama API
+    environment:
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - OLLAMA_BASE_URL=http://localhost:11434
+      - DATABASE_URL=sqlite:///./data/multiagent.db
+      - OLLAMA_MODEL=gemma2:2b
+    volumes:
+      - app_data:/app/data
+      - app_logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 120s  # Longer startup time for model loading
+
+volumes:
+  app_data:
+  app_logs:
+
+networks:
+  default:
+    driver: bridge
