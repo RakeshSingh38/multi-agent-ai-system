@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: multiagent-ai-system
+    env: docker  # Changed from python to docker
+    image: ghcr.io/rakeshsingh38/multi-agent-ai-system:latest  # Use GHCR image
+    region: oregon  # or your preferred region
+    plan: starter   # upgrade to 'pro' with GitHub Education Pack
+    autoDeploy: true
+    envVars:
+      - key: OPENROUTER_API_KEY
+        sync: false  # Set in Render dashboard
+      # Other env vars will use defaults from Dockerfile
