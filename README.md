@@ -8,6 +8,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-black.svg)](LICENSE)
 [![Python 3.9+](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![Docker Ready](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&logoColor=white)](docker-compose.yml)
+[![OpenRouter AI](https://img.shields.io/badge/AI-OpenRouter-FF6B35?logo=openai&logoColor=white)](https://openrouter.ai/)
+[![Llama 3.2](https://img.shields.io/badge/Model-Llama_3.2-0066CC?logo=meta&logoColor=white)](https://openrouter.ai/)
 
 ---
 
@@ -69,9 +71,10 @@ data analysis, advanced visualizations, and professional report generation.
 -   **Database Integration**: SQLAlchemy with SQLite/PostgreSQL support
 -   **Async Processing**: High-performance concurrent task execution
 
-### 💰 Cost-Effective
+### 💰 Cost-Effective & Flexible
 
--   **Zero API Costs**: Optional local LLMs via Ollama
+-   **OpenRouter Integration**: Cloud AI with Llama 3.2 models (pay-per-use)
+-   **Local LLM Support**: Optional Ollama integration for offline operation
 -   **OpenAI Compatible**: Drop-in replacement for cloud AI services
 -   **Docker Ready**: Containerized deployment for any environment
 
@@ -79,13 +82,32 @@ data analysis, advanced visualizations, and professional report generation.
 
 ## Quick Start
 
-### Prerequisites
+### 🚀 **1-Click Docker Deployment (Easiest)**
+
+```bash
+# Get OpenRouter API key from https://openrouter.ai/
+echo "OPENROUTER_API_KEY=your_api_key_here" > .env
+
+# Deploy the AI system
+docker run -d --name multi-agent-ai \
+  -p 8000:8000 -p 8501:8501 \
+  --env-file .env \
+  ghcr.io/rakeshsingh38/multi-agent-ai-system:latest
+
+# Access at http://localhost:8501/
+```
+
+**✅ That's it!** Your AI system is running with Llama 3.2 and OpenRouter integration.
+
+### 🛠️ **Local Development Setup**
+
+#### Prerequisites
 
 -   Python 3.9+
 -   Git
 -   Ollama (optional, for local LLMs)
 
-### 5-Minute Setup
+#### 5-Minute Setup
 
 1. **Clone the repository**
 
@@ -110,9 +132,6 @@ data analysis, advanced visualizations, and professional report generation.
 
     ```bash
     # For full system (recommended)
-    pip install -r requirements-full.txt
-
-    # For Streamlit demo only
     pip install -r requirements.txt
     ```
 
@@ -338,12 +357,46 @@ git push origin main
 
 ### Docker Deployment
 
-#### Self-Contained Version (No Internet Required)
+#### 🚀 **OpenRouter Cloud Deployment (Recommended)**
 
-For offline deployments with built-in AI model:
+**Production-ready with cloud AI inference:**
 
 ```bash
-# Build self-contained image with Ollama + gemma2:2b model
+# Deploy from GitHub Container Registry
+docker run -d --name multi-agent-ai \
+  -p 8000:8000 -p 8501:8501 \
+  --env-file .env \
+  ghcr.io/rakeshsingh38/multi-agent-ai-system:latest
+
+# Alternative: Use OpenRouter-specific image
+docker run -d --name multi-agent-openrouter \
+  -p 8000:8000 -p 8501:8501 \
+  --env-file .env \
+  ghcr.io/rakeshsingh38/multi-agent-openrouter:latest
+```
+
+**Features:**
+- ✅ **OpenRouter Integration**: Cloud AI with Llama 3.2 3B model
+- ✅ **Production Optimized**: 1.5GB lightweight image
+- ✅ **High Performance**: Cloud inference (faster than local)
+- ✅ **API Key Required**: Configure `OPENROUTER_API_KEY` in `.env`
+- ✅ **Multi-Agent System**: Research, Analysis, and Report agents
+- ✅ **Web UI + API**: Streamlit interface + FastAPI backend
+
+**Environment Setup:**
+```bash
+# Create .env file with your OpenRouter API key
+echo "OPENROUTER_API_KEY=your_api_key_here" > .env
+echo "OLLAMA_BASE_URL=https://openrouter.ai/api/v1" >> .env
+echo "OLLAMA_MODEL=meta-llama/llama-3.2-3b-instruct" >> .env
+```
+
+#### 🏠 **Self-Contained Version (Offline)**
+
+For offline deployments with built-in local AI model:
+
+```bash
+# Build self-contained image with local Ollama
 # Windows
 build-self-contained.bat
 
@@ -351,35 +404,100 @@ build-self-contained.bat
 chmod +x build-self-contained.sh
 ./build-self-contained.sh
 
-# Run the self-contained version
+# Run offline version
 docker run -d -p 8000:8000 -p 8501:8501 -p 11434:11434 multi-agent-ai-self-contained
-
-# Or use docker-compose
-docker-compose -f docker-compose.self-contained.yml up -d
 ```
 
 **Features:**
+- ✅ **Offline Operation**: No internet required
+- ✅ **Built-in Model**: Llama 3.2 1B local model
+- ✅ **Self-Contained**: All dependencies included
+- ❌ **Larger Size**: ~9.5GB image
+- ❌ **Slower Performance**: Local inference
 
--   ✅ Built-in Ollama with gemma2:2b model (~2GB)
--   ✅ No internet required for AI functionality
--   ✅ Self-contained, portable deployment
--   ✅ All dependencies included
-
-#### Standard Docker (Requires Internet/Local Models)
+#### 🐳 **Local Development**
 
 ```bash
-# Build and run
+# Quick local development
 docker-compose up --build
 
 # Access at http://localhost:8501
 ```
 
-#### Production Docker
+#### ⚙️ **Production Docker Compose**
 
 ```bash
-# Production setup
+# Production deployment with reverse proxy
 docker-compose -f docker-compose.prod.yml up -d
 ```
+
+### 🚀 **Latest Deployment Commands (2025)**
+
+#### **Quick Deploy (Recommended)**
+```bash
+# Deploy production-ready system with OpenRouter
+docker run -d --name ai-system \
+  -p 8000:8000 -p 8501:8501 \
+  --env-file .env \
+  ghcr.io/rakeshsingh38/multi-agent-ai-system:latest
+
+# Access your system:
+# Web UI: http://localhost:8501/
+# API: http://localhost:8000/
+# Health: http://localhost:8000/health
+```
+
+#### **Alternative Deploy Options**
+```bash
+# Option 2: Use OpenRouter-specific image
+docker run -d --name ai-openrouter \
+  -p 8000:8000 -p 8501:8501 \
+  --env-file .env \
+  ghcr.io/rakeshsingh38/multi-agent-openrouter:latest
+
+# Option 3: Local development
+docker-compose up --build
+```
+
+#### **Environment Configuration**
+```bash
+# Create .env file
+echo "OPENROUTER_API_KEY=your_api_key_here" > .env
+echo "OLLAMA_BASE_URL=https://openrouter.ai/api/v1" >> .env
+echo "OLLAMA_MODEL=meta-llama/llama-3.2-3b-instruct" >> .env
+echo "LLM_BACKEND=ollama" >> .env
+```
+
+#### **Management Commands**
+```bash
+# Check status
+docker ps
+
+# View logs
+docker logs ai-system
+
+# Stop system
+docker stop ai-system
+
+# Restart system
+docker restart ai-system
+
+# Update to latest version
+docker pull ghcr.io/rakeshsingh38/multi-agent-ai-system:latest
+docker stop ai-system
+docker rm ai-system
+# Then run deploy command above
+```
+
+### 📦 **Available Docker Images**
+
+| Image | Size | AI Model | Internet | Use Case |
+|-------|------|----------|----------|----------|
+| `ghcr.io/rakeshsingh38/multi-agent-ai-system:latest` | 1.5GB | Llama 3.2 3B (OpenRouter) | ✅ Required | **Production Recommended** |
+| `ghcr.io/rakeshsingh38/multi-agent-openrouter:latest` | 1.5GB | Llama 3.2 3B (OpenRouter) | ✅ Required | Production Alternative |
+| `multi-agent-ai-self-contained:latest` | 9.5GB | Llama 3.2 1B (Local) | ❌ Offline | Offline/Isolated Deployments |
+
+**🔥 Recommended:** Use OpenRouter images for best performance and reliability!
 
 ### Cloud Platforms
 
@@ -537,25 +655,6 @@ for details.
 
 ---
 
-## Support & Contact
-
-### Getting Help
-
--   Documentation: [Full Documentation](docs/)
--   Issues:
-    [GitHub Issues](https://github.com/RakeshSingh38/multi-agent-ai-system/issues)
--   Discussions:
-    [GitHub Discussions](https://github.com/RakeshSingh38/multi-agent-ai-system/discussions)
-
-### Live Demo
-
-🚀 Try it now:
-[Multi-Agent AI System](https://multi-agent-ai-system.onrender.com/)
-
----
-
-## Screenshots
-
 ### Main Dashboard
 
 _[Screenshot of main interface with navigation tabs]_
@@ -585,3 +684,30 @@ _[Screenshot of Swagger/OpenAPI documentation]_
 **⭐ If you find this project helpful, please give it a star on GitHub!**
 
 _Built with ❤️ using cutting-edge AI and modern Python technologies_
+
+---
+
+### 📊 **Current System Status (October 2025)**
+
+✅ **Fully Operational Features:**
+- Multi-agent AI system with Research, Analysis, and Report agents
+- OpenRouter integration with Llama 3.2 3B model
+- Real-time data collection from web sources
+- Professional report generation
+- Streamlit web interface + FastAPI backend
+- Docker containerization ready
+- Production deployment on GHCR
+
+✅ **Available Deployments:**
+- **GitHub Container Registry**: `ghcr.io/rakeshsingh38/multi-agent-ai-system:latest`
+- **Alternative**: `ghcr.io/rakeshsingh38/multi-agent-openrouter:latest`
+- **Local Development**: Docker Compose setup
+
+✅ **Tested & Verified:**
+- OpenRouter API integration working
+- All agents functioning correctly
+- Web interface operational
+- API endpoints responding
+- Health checks passing
+
+🔥 **Ready for Production Use!**
